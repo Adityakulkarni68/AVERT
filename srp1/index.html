@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance Management System</title>
+  <style>
+    body { 
+      font-family: Arial; 
+      background: #f5f5f5; 
+      padding: 2rem;
+      margin: 0;
+    }
+    .nav {
+      background: #333;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+    .nav a {
+      color: white;
+      text-decoration: none;
+      margin-right: 1rem;
+      padding: 0.5rem 1rem;
+    }
+    .nav a:hover {
+      background: #555;
+      border-radius: 4px;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 2px 8px #0001;
+    }
+    .welcome {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .feature-card {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="teacher_home.html">Teacher Dashboard</a>
+    <a href="admin.html">Admin Dashboard</a>
+  </div>
+
+  <div class="container">
+    <div class="welcome">
+      <h1>Welcome to Attendance Management System</h1>
+      <p>Track and manage student attendance efficiently</p>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <h3>Teacher Login</h3>
+        <p>Access your dashboard to mark attendance</p>
+        <a href="login.html" style="color: #007bff;">Login as Teacher</a>
+      </div>
+      <div class="feature-card">
+        <h3>Admin Access</h3>
+        <p>View and manage flagged attendance</p>
+        <a href="admin.html" style="color: #007bff;">Admin Dashboard</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 

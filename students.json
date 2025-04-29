@@ -1,0 +1,62 @@
+[
+    {
+      "name": "Aarav Mehta",
+      "rollNo": "21CS001",
+      "branch": "CSE",
+      "section": "A"
+    },
+    {
+      "name": "Sanya Verma",
+      "rollNo": "21CS002",
+      "branch": "CSE",
+      "section": "A"
+    },
+    {
+      "name": "Rohan Desai",
+      "rollNo": "21EC003",
+      "branch": "ECE",
+      "section": "B"
+    },
+    {
+      "name": "Ishita Shah",
+      "rollNo": "21EC004",
+      "branch": "ECE",
+      "section": "B"
+    },
+    {
+      "name": "Kunal Patil",
+      "rollNo": "21ME005",
+      "branch": "ME",
+      "section": "C"
+    },
+    {
+      "name": "Neha Reddy",
+      "rollNo": "21ME006",
+      "branch": "ME",
+      "section": "C"
+    },
+    {
+      "name": "Aditya Kumar",
+      "rollNo": "21CE007",
+      "branch": "CE",
+      "section": "D"
+    },
+    {
+      "name": "Pooja Iyer",
+      "rollNo": "21CE008",
+      "branch": "CE",
+      "section": "D"
+    },
+    {
+      "name": "Rahul Sen",
+      "rollNo": "21EE009",
+      "branch": "EEE",
+      "section": "E"
+    },
+    {
+      "name": "Diya Joshi",
+      "rollNo": "21EE010",
+      "branch": "EEE",
+      "section": "E"
+    }
+  ]

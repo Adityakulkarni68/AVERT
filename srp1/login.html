@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Portal</title>
+  <link rel="stylesheet" href="/Users/manojkulkarni/Desktop/SRP/design.css" />
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <div class="input-group">
+        <label for="username">Username (Email):</label>
+        <input type="text" id="username" name="username" required placeholder="Enter your email"/>
+      </div>
+      <div class="input-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required placeholder="Enter your password"/>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div id="error-message" class="error-message"></div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBMQ3K52qhUHZtoq3qRdm7Qhsrq47wBHSo",
+  authDomain: "avert-86ef6.firebaseapp.com",
+  projectId: "avert-86ef6",
+  storageBucket: "avert-86ef6.firebasestorage.app",
+  messagingSenderId: "813023959298",
+  appId: "1:813023959298:web:717a961badc8109fc94a1b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const loginForm = document.getElementById('loginForm');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        showToast("Please enter both email and password", true);
+        return;
+      }
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          showToast("Login successful!");
+          setTimeout(() => {
+            window.location.href = "home.html";
+          }, 1500);
+        })
+        .catch((error) => {
+          showToast("Login failed: " + error.message, true);
+        });
+    });
+  </script>
+
+  <!-- Toast UI -->
+  <style>
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      z-index: 1000;
+    }
+    .toast.show {
+      opacity: 1;
+    }
+    .toast.error {
+      background-color: #e74c3c;
+    }
+  </style>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    function showToast(message, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast show' + (isError ? ' error' : '');
+      setTimeout(() => {
+        toast.className = 'toast';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

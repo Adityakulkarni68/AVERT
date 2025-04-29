@@ -1,0 +1,32 @@
+[
+  {
+    "email": "admin@school.com",
+    "password": "admin123",
+    "name": "Admin User",
+    "role": "admin"
+  },
+  {
+    "email": "teacher1@school.com",
+    "password": "teacher123",
+    "name": "John Smith",
+    "role": "teacher"
+  },
+  {
+    "email": "teacher2@school.com",
+    "password": "teacher123",
+    "name": "Sarah Johnson",
+    "role": "teacher"
+  },
+  {
+    "email": "teacher3@school.com",
+    "password": "teacher123",
+    "name": "Michael Brown",
+    "role": "teacher"
+  },
+  {
+    "email": "teacher4@school.com",
+    "password": "teacher123",
+    "name": "Emily Davis",
+    "role": "teacher"
+  }
+] 

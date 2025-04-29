@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to get user role
+    function getUserRole() {
+      return get(/databases/$(database)/documents/teachers/$(request.auth.token.email)).data.role;
+    }
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return getUserRole() == 'admin';
+    }
+    
+    // Helper function to check if user is teacher
+    function isTeacher() {
+      return getUserRole() == 'teacher';
+    }
+    
+    // Teachers collection rules
+    match /teachers/{email} {
+      allow read: if request.auth != null;
+      allow write: if false; // Only admins can modify through admin SDK
+    }
+    
+    // Students collection rules
+    match /students/{studentId} {
+      // Teachers can read and update attendance
+      allow read: if request.auth != null;
+      allow update: if isTeacher() && 
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['lastAttendance']);
+      
+      // Admins can read all data
+      allow read: if isAdmin();
+    }
+    
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+} 

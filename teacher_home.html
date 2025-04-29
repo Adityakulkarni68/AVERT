@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Home</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="nav">
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+      <a href="teacher_home.html">Teacher Dashboard</a>
+    </div>
+    <div class="nav-right">
+      <span id="userName" class="user-name"></span>
+      <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+      <button class="theme-toggle" id="themeToggle">
+        <span class="theme-icon">🌙</span>
+        <span class="theme-text">Dark Mode</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Student Attendance</h2>
+    <table id="studentsTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Roll No</th>
+          <th>Branch</th>
+          <th>Section</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div id="message" class="message" style="display: none;"></div>
+  </div>
+
+  <script type="module" src="./teacher_home.js"></script>
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('.theme-icon');
+    const themeText = themeToggle.querySelector('.theme-text');
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeButton(savedTheme);
+    
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeButton(newTheme);
+    });
+    
+    function updateThemeButton(theme) {
+      themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+      themeText.textContent = theme === 'light' ? 'Dark Mode' : 'Light Mode';
+    }
+  </script>
+</body>
+</html> 
