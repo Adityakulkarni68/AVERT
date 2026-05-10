@@ -1,0 +1,55 @@
+@startuml Attendance Management System - Sequence Diagram
+
+skinparam backgroundColor white
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam roundCorner 20
+skinparam shadowing false
+
+skinparam sequence {
+    ArrowColor #333333
+    LifeLineBorderColor #333333
+    ParticipantBorderColor #333333
+    ParticipantBackgroundColor white
+}
+
+actor Teacher
+participant "Web Interface" as UI
+participant "Auth Service" as Auth
+participant "Attendance Service" as Attendance
+participant "Database" as DB
+
+== Login Process ==
+Teacher -> UI: Enter credentials
+UI -> Auth: Validate credentials
+Auth -> DB: Check user data
+DB --> Auth: Return user info
+Auth --> UI: Return auth token
+UI --> Teacher: Show dashboard
+
+== Mark Attendance ==
+Teacher -> UI: Select class
+UI -> Attendance: Get class students
+Attendance -> DB: Fetch student list
+DB --> Attendance: Return students
+Attendance --> UI: Display student list
+
+loop For each student
+    Teacher -> UI: Mark attendance status
+    UI -> Attendance: Save attendance
+    Attendance -> DB: Store attendance record
+    DB --> Attendance: Confirm save
+    Attendance --> UI: Update display
+end
+
+== Generate Report ==
+Teacher -> UI: Request report
+UI -> Attendance: Generate report
+Attendance -> DB: Fetch attendance data
+DB --> Attendance: Return data
+Attendance -> Attendance: Process data
+Attendance --> UI: Display report
+UI --> Teacher: Show report
+
+@enduml 

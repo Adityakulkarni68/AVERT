@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin - Flagged Students</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -13,14 +13,43 @@
       <a href="login.html">Login</a>
       <a href="teacher_home.html">Teacher Dashboard</a>
     </div>
-    <button class="theme-toggle" id="themeToggle">
-      <span class="theme-icon">🌙</span>
-      <span class="theme-text">Dark Mode</span>
-    </button>
+    <div class="nav-right">
+      <span id="userName" class="user-name"></span>
+      <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+      <button class="theme-toggle" id="themeToggle">
+        <span class="theme-icon">🌙</span>
+        <span class="theme-text">Dark Mode</span>
+      </button>
+    </div>
   </div>
 
   <div class="container">
-    <h2>Flagged (Late) Students</h2>
+    <h2>Attendance Sheet</h2>
+    <div class="attendance-filters">
+      <select id="branchFilter" class="filter-select">
+        <option value="">All Branches</option>
+      </select>
+      <select id="sectionFilter" class="filter-select">
+        <option value="">All Sections</option>
+      </select>
+      <input type="date" id="dateFilter" class="filter-select">
+    </div>
+    <table id="attendanceTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Roll No</th>
+          <th>Branch</th>
+          <th>Section</th>
+          <th>Status</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div id="attendanceMessage" class="message" style="display: none;"></div>
+
+    <h2 style="margin-top: 2rem;">Flagged (Late) Students</h2>
     <table id="flaggedTable">
       <thead>
         <tr>
@@ -29,11 +58,28 @@
           <th>Branch</th>
           <th>Section</th>
           <th>Marked Time</th>
+          <th>Late Count</th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
-    <div id="message" class="message" style="display: none;"></div>
+    <div id="flaggedMessage" class="message" style="display: none;"></div>
+
+    <h2 style="margin-top: 2rem;">Serious Offenders (5+ Late Instances)</h2>
+    <table id="offendersTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Roll No</th>
+          <th>Branch</th>
+          <th>Section</th>
+          <th>Total Late Count</th>
+          <th>Last Late Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div id="offendersMessage" class="message" style="display: none;"></div>
   </div>
 
   <script type="module" src="./admin.js"></script>

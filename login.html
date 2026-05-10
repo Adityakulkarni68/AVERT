@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -11,7 +11,6 @@
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="login.html">Login</a>
-      <a href="teacher_home.html">Teacher Dashboard</a>
     </div>
     <button class="theme-toggle" id="themeToggle">
       <span class="theme-icon">🌙</span>
@@ -19,20 +18,48 @@
     </button>
   </div>
 
-  <div class="container" style="max-width: 400px;">
-    <h2 style="text-align: center; margin-bottom: 1.5rem;">Login</h2>
-    <div class="role-selector" style="margin-bottom: 1.5rem; display: flex; gap: 1rem; justify-content: center;">
-      <button id="teacherBtn" class="btn active" style="flex: 1;">Teacher</button>
-      <button id="adminBtn" class="btn" style="flex: 1;">Admin</button>
+  <div class="login-page">
+    <div class="login-container">
+      <div class="login-box">
+        <div class="login-header">
+          <h2>Welcome Back</h2>
+          <p>Please login to continue</p>
+        </div>
+        
+        <form id="loginForm" class="login-form">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-group">
+              <span class="input-icon">📧</span>
+              <input type="email" id="email" placeholder="Enter your email" required class="form-control" />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-group">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="password" placeholder="Enter your password" required class="form-control" />
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary login-btn">
+            <span class="btn-text">Login</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </form>
+        
+        <div class="login-footer">
+          <p>Need help? <a href="#" class="help-link">Contact Support</a></p>
+        </div>
+      </div>
     </div>
-    <form id="loginForm" style="display: flex; flex-direction: column; gap: 1rem;">
-      <input type="email" id="email" placeholder="Email" required 
-        style="padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-secondary);" />
-      <input type="password" id="password" placeholder="Password" required 
-        style="padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-secondary);" />
-      <button type="submit" class="btn" style="width: 100%;">Login</button>
-    </form>
-    <div id="loginError" class="message error" style="display: none;"></div>
+    
+    <div class="login-decoration">
+      <div class="decoration-circle circle-1"></div>
+      <div class="decoration-circle circle-2"></div>
+      <div class="decoration-circle circle-3"></div>
+    </div>
   </div>
 
   <script type="module" src="./login.js"></script>
@@ -60,23 +87,6 @@
       themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
       themeText.textContent = theme === 'light' ? 'Dark Mode' : 'Light Mode';
     }
-
-    // Role selection functionality
-    const teacherBtn = document.getElementById('teacherBtn');
-    const adminBtn = document.getElementById('adminBtn');
-    let currentRole = 'teacher';
-
-    teacherBtn.addEventListener('click', () => {
-      teacherBtn.classList.add('active');
-      adminBtn.classList.remove('active');
-      currentRole = 'teacher';
-    });
-
-    adminBtn.addEventListener('click', () => {
-      adminBtn.classList.add('active');
-      teacherBtn.classList.remove('active');
-      currentRole = 'admin';
-    });
   </script>
 </body>
 </html>

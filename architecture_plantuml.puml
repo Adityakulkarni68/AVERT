@@ -1,0 +1,72 @@
+@startuml Attendance Management System
+
+!define RECTANGLE class
+
+skinparam backgroundColor white
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam roundCorner 20
+skinparam shadowing false
+
+skinparam rectangle {
+    BackgroundColor<<frontend>> #4a6bff
+    BackgroundColor<<backend>> #28a745
+    BackgroundColor<<database>> #ffc107
+    BackgroundColor<<security>> #dc3545
+    BorderColor #333333
+    FontColor white
+    FontColor<<database>> black
+}
+
+package "Frontend" {
+    RECTANGLE "Web Interface" as UI <<frontend>>
+    RECTANGLE "Auth Module" as Auth <<frontend>>
+    RECTANGLE "Teacher Dashboard" as TD <<frontend>>
+    RECTANGLE "Admin Dashboard" as AD <<frontend>>
+}
+
+package "Backend" {
+    RECTANGLE "API Gateway" as API <<backend>>
+    RECTANGLE "Auth Service" as AS <<backend>>
+    RECTANGLE "Attendance Service" as ATS <<backend>>
+    RECTANGLE "Report Service" as RGS <<backend>>
+}
+
+database "Database" {
+    RECTANGLE "User DB" as UDB <<database>>
+    RECTANGLE "Attendance DB" as ADB <<database>>
+    RECTANGLE "Student DB" as SDB <<database>>
+}
+
+package "Security" {
+    RECTANGLE "RBAC" as RBAC <<security>>
+    RECTANGLE "Session Mgmt" as SM <<security>>
+    RECTANGLE "Encryption" as DE <<security>>
+}
+
+' Connections
+UI --> API
+Auth --> API
+TD --> API
+AD --> API
+API --> AS
+API --> ATS
+API --> RGS
+AS --> UDB
+ATS --> ADB
+ATS --> SDB
+RGS --> ADB
+RBAC --> API
+SM --> API
+DE --> AS
+
+legend right
+    |= Type |= Description |
+    |<#4a6bff>| Frontend Components |
+    |<#28a745>| Backend Services |
+    |<#ffc107>| Database |
+    |<#dc3545>| Security Features |
+endlegend
+
+@enduml 

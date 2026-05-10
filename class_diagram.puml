@@ -1,0 +1,120 @@
+@startuml Attendance Management System - Class Diagram
+
+skinparam backgroundColor white
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam roundCorner 20
+skinparam shadowing false
+
+skinparam class {
+    BackgroundColor white
+    BorderColor #333333
+    ArrowColor #333333
+}
+
+' User Classes
+abstract class User {
+    -id: String
+    -name: String
+    -email: String
+    -password: String
+    +login()
+    +logout()
+    +updateProfile()
+}
+
+class Teacher {
+    -department: String
+    -classes: List<Class>
+    +markAttendance()
+    +viewAttendance()
+    +generateReport()
+}
+
+class Admin {
+    -role: String
+    +manageUsers()
+    +viewAllReports()
+    +configureSystem()
+}
+
+class Student {
+    -rollNumber: String
+    -class: Class
+    -attendance: List<Attendance>
+    +viewAttendance()
+}
+
+' Attendance Classes
+class Attendance {
+    -id: String
+    -date: Date
+    -status: AttendanceStatus
+    -remarks: String
+    +markPresent()
+    +markAbsent()
+    +markLate()
+}
+
+enum AttendanceStatus {
+    PRESENT
+    ABSENT
+    LATE
+}
+
+class Class {
+    -id: String
+    -name: String
+    -students: List<Student>
+    -teacher: Teacher
+    +addStudent()
+    +removeStudent()
+    +getAttendance()
+}
+
+class Report {
+    -id: String
+    -type: ReportType
+    -dateRange: DateRange
+    -data: Map<String, Object>
+    +generate()
+    +export()
+}
+
+enum ReportType {
+    DAILY
+    WEEKLY
+    MONTHLY
+    CUSTOM
+}
+
+' Relationships
+User <|-- Teacher
+User <|-- Admin
+User <|-- Student
+
+Teacher "1" -- "*" Class : teaches
+Class "1" -- "*" Student : contains
+Student "1" -- "*" Attendance : has
+Teacher "1" -- "*" Attendance : manages
+Attendance -- AttendanceStatus
+Report -- ReportType
+
+' Notes
+note right of User
+  Base class for all users
+  with common attributes
+end note
+
+note right of Attendance
+  Records attendance
+  for each student
+end note
+
+note right of Report
+  Generates various
+  types of reports
+end note
+
+@enduml 

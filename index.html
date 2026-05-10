@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Attendance Management System</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="nav">
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="login.html">Login</a>
-      <a href="teacher_home.html">Teacher Dashboard</a>
+      <a href="login.html?role=teacher" class="btn btn-teacher">Teacher Login</a>
+      <a href="login.html?role=admin" class="btn btn-admin">Admin Login</a>
     </div>
     <button class="theme-toggle" id="themeToggle">
       <span class="theme-icon">🌙</span>
@@ -29,7 +29,12 @@
       <div class="feature-card">
         <h3>Teacher Login</h3>
         <p>Access your dashboard to mark attendance</p>
-        <a href="login.html" class="btn">Login as Teacher</a>
+        <a href="login.html?role=teacher" class="btn btn-teacher">Login as Teacher</a>
+      </div>
+      <div class="feature-card">
+        <h3>Admin Login</h3>
+        <p>View attendance reports and manage the system</p>
+        <a href="login.html?role=admin" class="btn btn-admin">Login as Admin</a>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 // Placeholder Firestore logic for attendance app
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getFirestore, collection, doc, getDoc, getDocs, setDoc, Timestamp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, Timestamp, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBMQ3K52qhUHZtoq3qRdm7Qhsrq47wBHSo",
@@ -20,72 +20,49 @@ const db = getFirestore(app);
 const ALLOWED_TIME = 30; // minutes after which attendance is considered late
 
 export async function getAssignedStudents() {
-  try {
-    const studentsRef = collection(db, "students");
-    const querySnapshot = await getDocs(studentsRef);
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  } catch (error) {
-    console.error("Error fetching students:", error);
-    return [];
-  }
+  const studentsSnapshot = await getDocs(collection(db, "students"));
+  return studentsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
 export async function markAttendance(rollNo, status) {
   try {
     const studentRef = doc(db, "students", rollNo);
     const studentDoc = await getDoc(studentRef);
+    const studentData = studentDoc.data();
     
-    if (!studentDoc.exists()) {
-      throw new Error("Student not found");
-    }
-
-    const now = Timestamp.now();
-    const isLate = status === 'late' || (status === 'present' && isAttendanceLate(now));
-    
-    // Update the student document with attendance info
-    await setDoc(studentRef, {
-      ...studentDoc.data(),
+    const updates = {
       lastAttendance: {
-        timestamp: now,
-        status: isLate ? 'late' : 'present',
+        timestamp: new Date(),
+        status: status,
         date: new Date().toISOString().split('T')[0]
       }
-    }, { merge: true });
-    
-    return { 
-      success: true, 
-      isLate,
-      status: isLate ? 'late' : 'present',
-      timestamp: now
     };
+    
+    // Increment late count if status is late
+    if (status === 'late') {
+      updates.lateCount = increment(1);
+    }
+    
+    await updateDoc(studentRef, updates);
+    return { success: true };
   } catch (error) {
-    console.error("Error marking attendance:", error);
+    console.error('Error marking attendance:', error);
     return { success: false, error: error.message };
   }
 }
 
 export async function getFlaggedStudents() {
-  try {
-    const studentsRef = collection(db, "students");
-    const querySnapshot = await getDocs(studentsRef);
-    
-    const flaggedStudents = [];
-    querySnapshot.forEach(doc => {
-      const student = doc.data();
-      if (student.lastAttendance && student.lastAttendance.status === 'late') {
-        flaggedStudents.push({
-          ...student,
-          rollNo: doc.id,
-          markedTime: student.lastAttendance.timestamp.toDate().toLocaleString()
-        });
-      }
-    });
-    
-    return flaggedStudents;
-  } catch (error) {
-    console.error("Error fetching flagged students:", error);
-    return [];
-  }
+  const studentsSnapshot = await getDocs(collection(db, "students"));
+  return studentsSnapshot.docs
+    .map(doc => ({ id: doc.id, ...doc.data() }))
+    .filter(student => student.lastAttendance?.status === 'late');
+}
+
+export async function getSeriousOffenders() {
+  const studentsSnapshot = await getDocs(collection(db, "students"));
+  return studentsSnapshot.docs
+    .map(doc => ({ id: doc.id, ...doc.data() }))
+    .filter(student => student.lateCount >= 5);
 }
 
 function isAttendanceLate(timestamp) {
