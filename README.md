@@ -44,9 +44,7 @@ A web-based attendance management system for educational institutions. Teachers 
 │  Firestore Rules – RBAC enforced server-side        │
 └────────────────────────────────────────────────────┘
 ```
-## Application Preview
 
-![Dashboard](screenshots/dashboard.png)
 ### Firestore Data Model
 
 #### `teachers/{email}`
