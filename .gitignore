@@ -1,4 +1,11 @@
-serviceAccountKey.json
+# Python environment
 venv/
+.venv/
+__pycache__/
+
+# macOS
 .DS_Store
-**/.DS_Store
+
+# Secrets
+.env
+serviceAccountKey.json
